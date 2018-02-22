@@ -4,19 +4,19 @@ originalImage=rgb2gray(I)
 thresholdValue = 30; % 30 too little , 50 too large
 binaryImage = originalImage > thresholdValue; 
 blobMeasurements=regionprops(binaryImage,originalImage,'all')
-allBlobIntensities = [blobMeasurements.MeanIntensity];
-allBlobAreas = [blobMeasurements.Area];
-% Get a list of the blobs that meet our criteria and we need to keep.
-% These will be logical indices - lists of true or false depending on whether the feature meets the criteria or not.
-% for example [1, 0, 0, 1, 1, 0, 1, .....].  Elements 1, 4, 5, 7, ... are true, others are false.
-allowableIntensityIndexes = (allBlobIntensities > 150) & (allBlobIntensities < 220);
-allowableAreaIndexes = allBlobAreas < 2000; % Take the small objects.
-% Now let's get actual indexes, rather than logical indexes, of the  features that meet the criteria.
-% for example [1, 4, 5, 7, .....] to continue using the example from above.
-allAreas = [blobMeasurements.Area];
-allPerims = [blobMeasurements.Perimeter];
-circularities = allPerims .^ 2 ./ (4*pi*allAreas);
-%keeperIndexes = find(allowableIntensityIndexes & allowableAreaIndexes);
-keeperIndexes = find(circularities < 2 & allBlobAreas > 20);  
 
-keeperBlobsImage = ismember(binaryImage, keeperIndexes);
+%crop out
+numberOfBlobs = size(blobMeasurements, 1);
+    for k = 1 : numberOfBlobs           % Loop through all blobs.
+		% Find the bounding box of each blob.
+		thisBlobsBoundingBox = blobMeasurements(k).BoundingBox;  % Get list of pixels in current blob.
+		% Extract out this coin into it's own image.
+		subImage = imcrop(I, thisBlobsBoundingBox);
+		filename=strcat('subimage',num2str(k))
+		fullname=strcat(filename,'.tiff')
+        imwrite(subImage,fullname)
+		% Display the image with informative caption.
+		%subplot(100, 3, k);
+		%imshow(subImage);
+
+	end
