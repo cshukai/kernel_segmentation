@@ -7,19 +7,19 @@ binaryImage = originalImage > thresholdValue;
 
 %remove small object representing kernels in blue/purple
 BW2 = bwareaopen(binaryImage, 3);
- subplot(3,1,1)
- imshow(I)
- subplot(3,1,2)
+
+ subplot(4,1,1)
  imshow(binaryImage)
- subplot(3,1,3)
+ subplot(4,1,2)
  imshow(BW2)
 
-blobMeasurements=regionprops(binaryImage,originalImage,'all')
+%blobMeasurements=regionprops(binaryImage,originalImage,'all')
+blobMeasurements=regionprops(BW2,originalImage,'all')
 
 
 
 % test if the bounding boxes are correctly located
-subplot(2,1,1)
+subplot(4,1,3)
 imshow(originalImage);
 axis image; % Make sure image is not artificially stretched because of screen's aspect ratio.
 
@@ -33,9 +33,8 @@ for k = 1 : numberOfBoundaries
 	
 end
 hold off;
-subplot(2,1,2)
-imshow(I)
-
+ subplot(4,1,4)
+ imshow(I)
 
 %crop out
 numberOfBlobs = size(blobMeasurements, 1);
