@@ -1,9 +1,14 @@
 img=imread('DSC_0604.NEF')
-bk_img=imread('DSC_0725.NEF')
+
 I = imcrop(img)
 originalImage=rgb2gray(I)
 thresholdValue = 130; % 30 too little , 50 too large
 binaryImage = originalImage > thresholdValue; 
+
+%background substraction approach
+fore = double(img)/255;
+back = double(imread('DSC_0725.NEF'))/255;
+out=fore-back
 
 
 %remove small object representing kernels in blue/purple
