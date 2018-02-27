@@ -1,4 +1,5 @@
-img=imread('DSC_0613.NEF')
+img=imread('DSC_0604.NEF')
+bk_img=imread('DSC_0725.NEF')
 I = imcrop(img)
 originalImage=rgb2gray(I)
 thresholdValue = 130; % 30 too little , 50 too large
@@ -29,7 +30,7 @@ numberOfBoundaries = size(boundaries, 1);
 
 for k = 1 : numberOfBoundaries
 	thisBoundary = boundaries{k};
-	plot(thisBoundary(:,2), thisBoundary(:,1), 'g', 'LineWidth', 2);
+	plot(thisBoundary(:,2), thisBoundary(:,1), 'g', 'LineWidth', 1);
 	
 end
 hold off;
