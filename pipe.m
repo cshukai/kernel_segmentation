@@ -1,5 +1,13 @@
+%%%%%%%%%%%%%%%%%%%%%%%directly background removal from RGB%%%
+
+I=imread('DSC_0628.NEF')
+red_binary = I(:,:,1)  >100 | I(:,:,1)<60 ;
+green_binary = I(:,:,2)  <90 | I(:,:,2)  >130;
+blue_binary= I(:,:,3)  <120 |  I(:,:,3)  >150;
+final_mask = red_binary & green_binary & blue_binary;
+
 %%%%%%%%%%%%%%%%%color thresholding approach###################
-img=imread('DSC_0604.NEF')
+img=imread('DSC_0628.NEF')
 
 I = imcrop(img)
 originalImage=rgb2gray(I)
@@ -57,9 +65,9 @@ numberOfBlobs = size(blobMeasurements, 1);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%background-substraction-based approach%%%%%%%%%%%
-img=imread('DSC_0604.NEF')
+img=imread('DSC_0668.NEF')
 fore = double(img)/255;
-back = double(imread('DSC_0725.NEF'))/255;
+back = double(imread('DSC_0675.NEF'))/255;
 out=fore-back
 I = imcrop(out)
 originalImage=rgb2gray(I)
