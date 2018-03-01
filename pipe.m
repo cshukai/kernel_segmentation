@@ -1,10 +1,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%directly background removal from RGB%%%
 
 I=imread('DSC_0628.NEF')
-red_binary = I(:,:,1)  >100 | I(:,:,1)<60 ;
-green_binary = I(:,:,2)  <90 | I(:,:,2)  >130;
-blue_binary= I(:,:,3)  <120 |  I(:,:,3)  >150;
+red_binary = I(:,:,1)  >110 | I(:,:,1)<50 ;
+green_binary = I(:,:,2)  <80 | I(:,:,2)  >140;
+blue_binary= I(:,:,3)  <90 |  I(:,:,3)  >160;
 final_mask = red_binary & green_binary & blue_binary;
+
+% manually move the color meter away
 
 %%%%%%%%%%%%%%%%%color thresholding approach###################
 img=imread('DSC_0628.NEF')
