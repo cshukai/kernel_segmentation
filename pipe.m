@@ -119,6 +119,8 @@ numberOfBlobs = size(blobMeasurements, 1);
 
 
 %%%%%%%%%%%%%approach 4: random try##############
+imagefiles = dir('*.NEF');      
+nfiles = length(imagefiles);
 
 for ii=1:nfiles
    currentfilename = imagefiles(ii).name;
@@ -126,12 +128,13 @@ for ii=1:nfiles
  
    %ostu
    %https://www.mathworks.com/help/images/examples/correcting-nonuniform-illumination.html
-   currentimage=imadjust(currentimage)
-   bw = imbinarize(rgb2gray(currentimage));
+   currentimage=imadjust(rgb2gray(currentimage))
+   bw = imbinarize(currentimage);
    bw = bwareaopen(bw, 50); % not bigger than 50 pixel
    cc = bwconncomp(bw, 4)
    labeled = labelmatrix(cc);
    RGB_label = label2rgb(labeled, @spring, 'c', 'shuffle');
-   imwrite
+   out=strcat(currentfilename,'ostu.tiff')
+   imwrite(RGB_label,out)
    
 end
