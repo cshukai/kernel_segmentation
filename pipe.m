@@ -118,7 +118,7 @@ numberOfBlobs = size(blobMeasurements, 1);
 	end
 
 
-%%%%%%%%%%%%%approach 4: random try##############
+%%%%%%%%%%%%%approach 4: ostu ##############
 imagefiles = dir('*.NEF');      
 nfiles = length(imagefiles);
 
@@ -138,3 +138,39 @@ for ii=1:nfiles
    imwrite(RGB_label,out)
    
 end
+
+
+%%%%%%%%%%%%%approach 5: k mean clustering ##############
+%https://www.mathworks.com/help/images/examples/color-based-segmentation-using-k-means-clustering.html?prodcode=IP&language=en
+imagefiles = dir('*.NEF');      
+nfiles = length(imagefiles);
+
+for ii=1:nfiles
+   currentfilename = imagefiles(ii).name;
+   he = imread(currentfilename);
+  
+   cform = makecform('srgb2lab');
+   lab_he = applycform(he,cform);
+  
+   ab = double(lab_he(:,:,2:3));
+	nrows = size(ab,1);
+	ncols = size(ab,2);
+	ab = reshape(ab,nrows*ncols,2);
+
+	nColors = 30;
+	% repeat the clustering 3 times to avoid local minima
+	[cluster_idx, cluster_center] = kmeans(ab,nColors,'distance','sqEuclidean', 'Replicates',3,'MaxIter',1000);
+	pixel_labels = reshape(cluster_idx,nrows,ncols);
+	segmented_images = cell(1,3);
+	rgb_label = repmat(pixel_labels,[1 1 3]);
+	for k = 1:nColors
+    	color = he;
+    	color(rgb_label ~= k) = 0;
+    	segmented_images{k} = color;
+    	out=strcat(currentfilename,'cluster_',num2str(k),'.tiff')
+    	imwrite(segmented_images{k},out)
+	end
+   
+end
+
+%%%%approach 6: watershed %%%%%%%%
