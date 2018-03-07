@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%directly background removal from RGB%%%
+%%%%%%%%%%%%%%%%%%%%%%%approach 1 : directly background removal from RGB%%%%%%%%%%%%%
 
 I=imread('DSC_0628.NEF')
 red_binary = I(:,:,1)  >110 | I(:,:,1)<50 ;
@@ -8,7 +8,7 @@ final_mask = red_binary & green_binary & blue_binary;
 
 % manually move the color meter away
 
-%%%%%%%%%%%%%%%%%color thresholding approach###################
+%%%%%%%%%%%%%%%%%approach 2: color thresholding for regionprop###################
 img=imread('DSC_0628.NEF')
 
 I = imcrop(img)
@@ -66,7 +66,7 @@ numberOfBlobs = size(blobMeasurements, 1);
 	end
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%background-substraction-based approach%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%approach 3: background-substraction-based approach%%%%%%%%%%%
 img=imread('DSC_0668.NEF')
 fore = double(img)/255;
 back = double(imread('DSC_0675.NEF'))/255;
@@ -118,5 +118,10 @@ numberOfBlobs = size(blobMeasurements, 1);
 	end
 
 
+%%%%%%%%%%%%%approach 4: random try##############
 
-
+for ii=1:nfiles
+   currentfilename = imagefiles(ii).name;
+   currentimage = imread(currentfilename);
+ 
+end
