@@ -124,4 +124,14 @@ for ii=1:nfiles
    currentfilename = imagefiles(ii).name;
    currentimage = imread(currentfilename);
  
+   %ostu
+   %https://www.mathworks.com/help/images/examples/correcting-nonuniform-illumination.html
+   currentimage=imadjust(currentimage)
+   bw = imbinarize(rgb2gray(currentimage));
+   bw = bwareaopen(bw, 50); % not bigger than 50 pixel
+   cc = bwconncomp(bw, 4)
+   labeled = labelmatrix(cc);
+   RGB_label = label2rgb(labeled, @spring, 'c', 'shuffle');
+   imwrite
+   
 end
