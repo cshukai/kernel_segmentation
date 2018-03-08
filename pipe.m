@@ -174,3 +174,30 @@ for ii=1:nfiles
 end
 
 %%%%approach 6: watershed %%%%%%%%
+imagefiles = dir('*.NEF');      
+nfiles = length(imagefiles);
+
+for ii=1:nfiles
+   currentfilename = imagefiles(ii).name;
+   rgb = imread(currentfilename);
+   I = rgb2gray(rgb);
+   
+   hy = fspecial('sobel');
+hx = hy';
+Iy = imfilter(double(I), hy, 'replicate');
+Ix = imfilter(double(I), hx, 'replicate');
+gradmag = sqrt(Ix.^2 + Iy.^2);
+   
+   L = watershed(gradmag);
+Lrgb = label2rgb(L);
+se = strel('disk', 20);
+Io = imopen(I, se);
+Ie = imerode(I, se);
+Iobr = imreconstruct(Ie, I);
+Ioc = imclose(Io, se);
+Iobrd = imdilate(Iobr, se);
+Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
+Iobrcbr = imcomplement(Iobrcbr);
+fgm = imregionalmax(Iobrcbr);
+%%%%%%%%%%%%%%%%%%todo%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+end
