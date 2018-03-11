@@ -9,7 +9,7 @@ pix = im.load()
 width=im.size[0]
 height=im.size[1]
 
-##################find where pure background sections are##############################
+##################find where pure background sections are , assuming the kernels are located in the middle##############################
 cor_result_vertical=[] # side
 for i in range(width):
     if i<width-1:
@@ -40,14 +40,18 @@ for i in range(height):
         cor_result_horizontal.append(pearsonr(top,bot))
 
 
-cutoff_vertical=0.99   # assuming the kernels are located in the middle
+cutoff_vertical=0.99   
 for i in range(len(cor_result_vertical)):
     this_cor=cor_result_vertical[i][0]
     if this_cor<=cutoff_vertical:
         left=i+1
         break
 
-for i in range(len(cor_result_vertical)-1,-1,-1) :
+for i in range(len(cor_result_vertical)-1,-1,-1):
+    this_cor=cor_result_vertical[i][0]
+    if this_cor<=cutoff_vertical:
+        right=i+1
+        break    
 
 cutoff_horizontal=0.9
 for i in range(pearsonr):
