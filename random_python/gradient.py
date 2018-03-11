@@ -9,7 +9,7 @@ pix = im.load()
 width=im.size[0]
 height=im.size[1]
 
-##################find where pure background sections are , assuming the kernels are located in the middle##############################
+##################find where pure background sections are , assuming the kernels are located in the middle and color checker is on the top or bottom##############################
 cor_result_vertical=[] # side
 for i in range(width):
     if i<width-1:
@@ -23,7 +23,7 @@ for i in range(width):
 
 
 cor_result_horizontal=[] # top and botton
-middle=height/2
+
 for i in range(height):
     if i<height-1:
         top=numpy.array([])
@@ -44,22 +44,28 @@ cutoff_vertical=0.99
 for i in range(len(cor_result_vertical)):
     this_cor=cor_result_vertical[i][0]
     if this_cor<=cutoff_vertical:
-        left=i+1
+        left=i
         break
 
 for i in range(len(cor_result_vertical)-1,-1,-1):
     this_cor=cor_result_vertical[i][0]
     if this_cor<=cutoff_vertical:
-        right=i+1
+        right=i+2
         break    
 
 cutoff_horizontal=0.9
-for i in range(pearsonr):
-    if i<len(cor_result)-1:
+for i in range((len(cor_result_horizontal)/2)-1,-1,-1):
+    this_cor=cor_result_horizontal[i][0]
+    if this_cor>=cutoff_horizontal:
+        top=i+1
+        break
 
-top = 1
-right = 138
-bottom = height
+for i in range((len(cor_result_horizontal)/2)-1,-1,-1):
+    this_cor=cor_result_horizontal[i][0]
+    if this_cor>=cutoff_horizontal:
+        =i+1
+        break
+
 cropped_example = im.crop((left, top, right, bottom))
 
 
