@@ -60,14 +60,14 @@ for i in range((len(cor_result_horizontal)/2)-1,-1,-1):
         top=i+1
         break
 
-for i in range((len(cor_result_horizontal)/2)-1,-1,-1):
+for i in range((len(cor_result_horizontal)/2)-1,len(cor_result_horizontal)):
     this_cor=cor_result_horizontal[i][0]
     if this_cor>=cutoff_horizontal:
-        =i+1
+        bot=i+1
         break
 
-cropped_example = im.crop((left, top, right, bottom))
-
+cropped_example = im.crop((left, top, right, bot))
+cropped_example.save('test.png')
 
 
         
