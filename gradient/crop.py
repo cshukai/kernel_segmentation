@@ -67,7 +67,11 @@ for i in range((len(cor_result_horizontal)/2)-1,len(cor_result_horizontal)):
         break
 
 cropped_example = im.crop((left, top, right, bot))
-cropped_example.save('test.png')
+
+out_png=im.filename+'.png'
+out_tiff=im.filename+'.tiff'
+cropped_example.save(out_png)
+cropped_example.save(out_tiff)
 
 
         
