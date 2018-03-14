@@ -74,7 +74,8 @@ cropped_example.save(out_png)
 cropped_example.save(out_tiff)
 
 # extract left  background regions
-cropped_left=im.crop(1,top,left-1,bot)        
+left2=left-1
+cropped_left=im.crop((1,top,left2,bot))        
 left_png=im.filename+'left.png'
 left_tiff=im.filename+'left.tiff' 
 cropped_left.save(left_png)
