@@ -66,15 +66,16 @@ for i in range((len(cor_result_horizontal)/2)-1,len(cor_result_horizontal)):
         bot=i+1
         break
 
-cropped_example = im.crop((left, top, right, bot))
 
+cropped_example = im.crop((left, top, right, bot))# extract kernel
 out_png=im.filename+'.png'
 out_tiff=im.filename+'.tiff'
 cropped_example.save(out_png)
 cropped_example.save(out_tiff)
 
-
-        
-# find the median  RGB values  of background area
-
-        
+# extract left  background regions
+cropped_left=im.crop(1,top,left-1,bot)        
+left_png=im.filename+'left.png'
+left_tiff=im.filename+'left.tiff' 
+cropped_left.save(left_png)
+cropped_left.save(left_tiff)
