@@ -2,7 +2,7 @@ from PIL import Image
 import numpy
 from scipy.stats.stats import pearsonr
 
-im = Image.open("DSC_0795.NEF") 
+im = Image.open("DSC_0785.NEF") 
 
 pix = im.load()
 
@@ -80,3 +80,11 @@ left_png=im.filename+'left.png'
 left_tiff=im.filename+'left.tiff' 
 cropped_left.save(left_png)
 cropped_left.save(left_tiff)
+
+#extract right background regions
+left3=right+1
+cropped_right=im.crop((left3,top,width,bot))
+right_png=im.filename+'right.png'
+right_tiff=im.filename+'right.tiff' 
+cropped_right.save(right_png)
+cropped_right.save(right_tiff)
