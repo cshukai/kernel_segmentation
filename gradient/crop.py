@@ -3,11 +3,20 @@ import numpy
 from scipy.stats.stats import pearsonr
 
 im = Image.open("DSC_0785.NEF") 
+im2 = Image.open("DSC_0785.tiff") 
 
 pix = im.load()
+pix2 = im2.load()
 
 width=im.size[0]
 height=im.size[1]
+
+width2=im2.size[0]
+height2=im2.size[1]
+
+width_ratio=width2/width
+height_ratio=numpy.round((height2/height)*0.9)
+height_ratio=height2/height
 
 ##################find where pure background sections are , assuming the kernels are located in the middle and color checker is on the top or bottom##############################
 cor_result_vertical=[] # side
@@ -31,45 +40,59 @@ for i in range(height):
         for j in range(width):
             top=numpy.append(top,sum(pix[j,i]))
             bot=numpy.append(bot,sum(pix[j,i+1]))
+            #print(top)
+            #print(bot)
+            #print('----')
             if numpy.sum(top)==0:
-                top=numpy.add(top,1)
+                top=numpy.add(top,1) 
             if numpy.sum(bot)==0:
                 bot=numpy.add(bot,1)    
                 
             
         cor_result_horizontal.append(pearsonr(top,bot))
 
-
-cutoff_vertical=0.99   
+left=None
+cutoff_vertical=0.99
 for i in range(len(cor_result_vertical)):
     this_cor=cor_result_vertical[i][0]
+    #print(this_cor)
     if this_cor<=cutoff_vertical:
+        print('here')
         left=i
         break
-
+    
+right=None
 for i in range(len(cor_result_vertical)-1,-1,-1):
     this_cor=cor_result_vertical[i][0]
     if this_cor<=cutoff_vertical:
         right=i+2
         break    
 
-cutoff_horizontal=0.9
+top=None
+cutoff_horizontal=0.99
 for i in range((len(cor_result_horizontal)/2)-1,-1,-1):
     this_cor=cor_result_horizontal[i][0]
     if this_cor>=cutoff_horizontal:
         top=i+1
         break
 
+bot=None
 for i in range((len(cor_result_horizontal)/2)-1,len(cor_result_horizontal)):
     this_cor=cor_result_horizontal[i][0]
     if this_cor>=cutoff_horizontal:
         bot=i+1
         break
 
+left=left*width_ratio
+right=right*width_ratio
+top=top*height_ratio
+bot=bot*height_ratio
+
+im=im2
 
 cropped_example = im.crop((left, top, right, bot))# extract kernel
-out_png=im.filename+'.png'
-out_tiff=im.filename+'.tiff'
+out_png=im.filename+'.kernel.png'
+out_tiff=im.filename+'kernel.tiff'
 cropped_example.save(out_png)
 cropped_example.save(out_tiff)
 
