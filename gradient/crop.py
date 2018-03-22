@@ -114,16 +114,16 @@ cropped_right.save(right_tiff)
 
 
 #extract down background regions
-top2=bot+1
+top2=bot+2*height_ratio
 bot2=0
-middle=width/2
-for i in (range(height,-1,-1)):
-    print(i)
-    this_sum=numpy.sum(pix[middle,i-1])
-    if(this_sum)>0:
-        bot2=i-2
-        break
-cropped_down=im.crop((0,top2,width,bot2))
+#middle=width/2
+#for i in (range(height,-1,-1)):
+#    print(i)
+#    this_sum=numpy.sum(pix[middle,i-1])
+#    if(this_sum)>0:
+#        bot2=i-2
+#        break
+cropped_down=im.crop((0,top2,width2,height2))
 down_png=im.filename+'down.png'
 down_tiff=im.filename+'down.tiff' 
 cropped_down.save(down_png)
