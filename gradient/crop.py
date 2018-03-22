@@ -105,8 +105,8 @@ cropped_left.save(left_png)
 cropped_left.save(left_tiff)
 
 #extract right background regions
-left3=right+1
-cropped_right=im.crop((left3,top,width,bot))
+left3=right+1*width_ratio
+cropped_right=im.crop((left3,top,width2,bot))
 right_png=im.filename+'right.png'
 right_tiff=im.filename+'right.tiff' 
 cropped_right.save(right_png)
