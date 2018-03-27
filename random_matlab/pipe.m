@@ -199,5 +199,32 @@ Iobrd = imdilate(Iobr, se);
 Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
 Iobrcbr = imcomplement(Iobrcbr);
 fgm = imregionalmax(Iobrcbr);
-%%%%%%%%%%%%%%%%%%todo%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%todo
 end
+
+
+
+%%%%%%%%%%%%%%%remove shadow
+I = imread('DSC_0785.tiffkernel.tiff');  % your original image
+I=rgb2lab(I)
+
+red_binary = I(:,:,1)  >110 | I(:,:,1)<50 ;
+green_binary = I(:,:,2)  <80 | I(:,:,2)  >140;
+blue_binary= I(:,:,3)  <90 |  I(:,:,3)  >160;
+final_mask = red_binary & green_binary & blue_binary;
+
+
+
+
+I=rgb2hsv(I);
+
+I1=I(:,:,3);   % change to hsv and select the channel with most clear contrast between object and shadow
+
+
+thresholded = I1 > 0.7; %% Threshold to isolate lungs
+thresholded = bwareaopen(thresholded,5);  % remove too small pixels
+I2=thresholded.*I1;
+I3=edge(I2,'canny',graythresh(I2));  % ostu method
+I3 = imfill(I3,'hole');
+figure,imagesc(I3)  %object binary image
+
