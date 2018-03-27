@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%approach 1 : directly background removal from RGB%%%%%%%%%%%%%
 
-I=imread('DSC_0628.NEF')
+I=imread('DSC_0785.tiff')
 red_binary = I(:,:,1)  >110 | I(:,:,1)<50 ;
 green_binary = I(:,:,2)  <80 | I(:,:,2)  >140;
 blue_binary= I(:,:,3)  <90 |  I(:,:,3)  >160;
@@ -204,14 +204,12 @@ end
 
 
 
-%%%%%%%%%%%%%%%remove shadow
-I = imread('DSC_0785.tiffkernel.tiff');  % your original image
+%%%%%%%%%%%%%%%convert to different color space for shadow removal and apply edge detection
+I = imread('DSC_0785.tiff');  % your original image
 I=rgb2lab(I)
-
-red_binary = I(:,:,1)  >110 | I(:,:,1)<50 ;
-green_binary = I(:,:,2)  <80 | I(:,:,2)  >140;
-blue_binary= I(:,:,3)  <90 |  I(:,:,3)  >160;
-final_mask = red_binary & green_binary & blue_binary;
+blue_binary=  I(:,:,3)  >-15;
+imwrite(blue_binary,'shadow_removed_lab.tiff')
+I_hsv=rgb2hsv(I)
 
 
 

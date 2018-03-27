@@ -7,6 +7,8 @@ right_bk=readTIFF("DSC_0785.tiffright.tiff")
 bot_bk=readTIFF("DSC_0785.tiffdown.tiff")
 im= readTIFF("DSC_0785.tiffkernel.tiff")
 raw=readTIFF("DSC_0785.tiff")
+
+
 ########################actually Feri-Chen's algorithm seems to work well#####################3
 meths=c('Sobel', 'Prewitt', 'Roberts_cross', 'Frei_chen', 'Scharr', 'LoG')
 convs=c('same','full')
@@ -14,7 +16,7 @@ for(i in 1:length(meths)){
     for(j in 1: length(convs)) {
         prefix=paste(meths[i],convs[j],sep="_")
         outname=paste(prefix,"tiff",sep=".")
-        out=edge_detection(im, method = meths[i], conv_mode = convs[j]) 
+        out=edge_detection(raw, method = meths[i], conv_mode = convs[j]) 
         writeTIFF(out,outname)
     }
 }
