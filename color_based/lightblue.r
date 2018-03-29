@@ -1,6 +1,7 @@
 library("tiff")
 library(abind)
 library("OpenImageR")
+library("gpur")
 
 left_bk=readTIFF("DSC_0785.tiffleft.tiff")
 right_bk=readTIFF("DSC_0785.tiffright.tiff")

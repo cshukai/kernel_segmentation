@@ -206,23 +206,9 @@ end
 
 %%%%%%%%%%%%%%%convert to different color space for shadow removal and apply edge detection
 I = imread('DSC_0785.tiff');  % your original image
+%I=imcrop(I)
 I=rgb2lab(I)
 blue_binary=  I(:,:,3)  >-15;
 imwrite(blue_binary,'shadow_removed_lab.tiff')
-I_hsv=rgb2hsv(I)
 
-
-
-
-I=rgb2hsv(I);
-
-I1=I(:,:,3);   % change to hsv and select the channel with most clear contrast between object and shadow
-
-
-thresholded = I1 > 0.7; %% Threshold to isolate lungs
-thresholded = bwareaopen(thresholded,5);  % remove too small pixels
-I2=thresholded.*I1;
-I3=edge(I2,'canny',graythresh(I2));  % ostu method
-I3 = imfill(I3,'hole');
-figure,imagesc(I3)  %object binary image
 
