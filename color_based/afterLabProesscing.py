@@ -25,10 +25,14 @@ for i in range(width):
 outname=im.filename+'shadowtest.tiff'
 test.save(outname)
 
+
 masked={}
 for i in range(width):
     this_masked=[]
     for j in range(height):
         if(lab_result[i,j]==255):
             this_masked.append(j)
-    masked[i]=this_masked        
+    if(len(this_masked)>1):
+     masked[i]=this_masked        
+
+allKeys=masked.keys()
