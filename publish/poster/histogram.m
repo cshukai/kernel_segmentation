@@ -12,7 +12,6 @@ imhist(I(:,:,3))
 title('Blue Channel of Sample Kernel Image')
 xlabel('Pixel  Values') % x-axis label
 ylabel('Frequency') % y-axis label
-
 %subplot(3:1,2)
 figure
 imhist(I(:,:,2))
