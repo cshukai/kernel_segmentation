@@ -28,6 +28,7 @@ test.save(outname)
 
 #exisiting contour finder
 im3=cv2.imread('shadow_removed_lab.tiff',0)
+_, contours, hierc = cv2.findContours(im3,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
 #alignment - gpu
 masked={}
 for i in range(width):
