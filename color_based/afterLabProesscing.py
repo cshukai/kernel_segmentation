@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 import pyopencl as cl
+import cv2
 
 im=Image.open("DSC_0785.tiff")
 im2=Image.open("shadow_removed_lab.tiff")
@@ -25,7 +26,9 @@ for i in range(width):
 outname=im.filename+'shadowtest.tiff'
 test.save(outname)
 
-
+#exisiting contour finder
+im3=cv2.imread('shadow_removed_lab.tiff',0)
+#alignment - gpu
 masked={}
 for i in range(width):
     this_masked=[]
