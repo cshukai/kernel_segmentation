@@ -29,7 +29,11 @@ test.save(outname)
 #exisiting contour finder
 im3=cv2.imread('shadow_removed_lab.tiff',0)
 im6=cv2.imread('DSC_0785.tiff')
-_, contours, hierc = cv2.findContours(im3,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
+#_, contours, hierc = cv2.findContours(im3,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE) 
+_, contours, hierc = cv2.findContours(im3,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+
+
+
 im4=im3.copy()
 itr=0
 for cnt in contours:
