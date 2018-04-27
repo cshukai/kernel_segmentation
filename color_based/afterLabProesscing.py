@@ -37,7 +37,8 @@ for cnt in contours:
     (x,y,w,h) = cv2.boundingRect(cnt)
     #im5=cv2.rectangle(im4,(x,y),(x+w,y+h),(0,255,0),2)
     kernel = im6[y:y+h,x:x+w]
-    cv2.imwrite(str(itr)+'.png',kernel)
+    #cv2.imwrite(str(itr)+'.png',kernel)
+    cv2.imwrite(str(itr)+'.tiff',kernel)
     itr=itr+1
 #alignment - gpu
 masked={}
