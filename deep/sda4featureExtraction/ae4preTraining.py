@@ -38,6 +38,13 @@ trained_encoders = []
 X_train_tmp = X_train
 for n_in, n_out in zip(nb_hidden_layers[:-1], nb_hidden_layers[1:]):
     print('Pre-training the layer: Input {} -> Output {}'.format(n_in, n_out))
+    '''
+    Pre-training the layer: Input 784 -> Output 600
+    Pre-training the layer: Input 600 -> Output 500
+    Pre-training the layer: Input 500 -> Output 400
+    
+    not sure n_in and n_out are for dimension or actually datasets
+    '''
     # Create AE and training
     ae = Sequential()
     encoder = containers.Sequential([Dense(n_in, n_out, activation='sigmoid')])
