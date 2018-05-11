@@ -43,7 +43,7 @@ for n_in, n_out in zip(nb_hidden_layers[:-1], nb_hidden_layers[1:]):
     Pre-training the layer: Input 600 -> Output 500
     Pre-training the layer: Input 500 -> Output 400
     
-    not sure n_in and n_out are for dimension or actually datasets
+    data was feeded  as X_train so n_in and out are for dimension
     '''
     # Create AE and training
     ae = Sequential()
