@@ -13,6 +13,9 @@ from keras.utils import np_utils
     Example of Stacked Autoencoder from offical repository .
     to demonstrate how to use AutoEncoder
     module and do layer-wise pre-training and fine-tuning
+    
+    https://keras.io/layers/core/#autoencoder
+    https://github.com/keras-team/keras/issues/358
 '''
 
 batch_size = 64
@@ -44,6 +47,10 @@ for n_in, n_out in zip(nb_hidden_layers[:-1], nb_hidden_layers[1:]):
     Pre-training the layer: Input 500 -> Output 400
     
     data was feeded  as X_train so n_in and out are for dimension
+    weigth saved in trained_encoders
+    
+    wait but this  look like a regular atuoenocder but not a stacked one
+     
     '''
     # Create AE and training
     ae = Sequential()
