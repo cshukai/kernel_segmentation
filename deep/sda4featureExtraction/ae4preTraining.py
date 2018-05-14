@@ -16,6 +16,7 @@ from keras.utils import np_utils
     
     https://keras.io/layers/core/#autoencoder
     https://github.com/keras-team/keras/issues/358
+    https://github.com/keras-team/keras/pull/371/files#diff-31e21ea530284854c45d440a10ea14b0
 '''
 
 batch_size = 64
@@ -49,8 +50,10 @@ for n_in, n_out in zip(nb_hidden_layers[:-1], nb_hidden_layers[1:]):
     data was feeded  as X_train so n_in and out are for dimension
     weigth saved in trained_encoders
     
-    wait but this  look like a regular atuoenocder but not a stacked one
-     
+    but this  look like a regular atuoenocder but not a stacked one
+    and I do doubt if it is a good example , because when fine-tuning
+    the network architecure doesn't necessary need to be autoencoder
+    otherwise it is not  pre-training
     '''
     # Create AE and training
     ae = Sequential()
