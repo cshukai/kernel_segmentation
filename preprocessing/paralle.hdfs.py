@@ -1,4 +1,3 @@
-#pyspark --num-executors 2 --driver-memory 5g --executor-memory 5g --packages Azure:mmlspark:0.12
 import cv2
 import numpy as np
 import os
@@ -26,4 +25,5 @@ tr_rgb2lab = (ImageTransformer()                  # images are resized and then 
       )
 
 im_lab = tr_rgb2lab.transform(images).select("transformed")
-ImageWriter.write(im_lab)
+ImageWriter.write(im_lab,"/", pathCol="transformed.path", imageCol="transformed.bytes", encoding=".png")
+#: java.lang.ClassCastException: [B cannot be cast to org.apache.spark.sql.Row
