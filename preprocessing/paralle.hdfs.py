@@ -1,12 +1,6 @@
 import cv2
 import numpy as np
 import os
-import pyspark
-
-spark = pyspark.sql.SparkSession.builder.appName("MyApp") \
-            .config("spark.jars.packages", "Azure:mmlspark:0.12") \
-            .getOrCreate()
-
 import mmlspark
 from mmlspark import toNDArray
 from mmlspark import ImageTransformer
@@ -16,14 +10,19 @@ from PIL import Image
 
 IMAGE_PATH="hdfs://localhost:9000/"
 images = spark.readImages(IMAGE_PATH, recursive = True, sampleRatio = 1.0)
-#images.printSchema()
-#images.select('image.width').show()
 
-tr_rgb2lab = (ImageTransformer()                  # images are resized and then cropped
+tr_rgb2lab = (ImageTransformer() 
       .setOutputCol("transformed")
       .colorFormat(cv2.COLOR_RGB2Lab)
       )
 
 im_lab = tr_rgb2lab.transform(images).select("transformed")
-ImageWriter.write(im_lab,"/", pathCol="transformed.path", imageCol="transformed.bytes", encoding=".png")
-#: java.lang.ClassCastException: [B cannot be cast to org.apache.spark.sql.Row
+
+
+def saveImagesFromDataFrame(row):
+      inputnames=str(row.path).split("/") # doesn't seem like it is row object since it can't access path directly
+      outname=inputnames[len(inputnames)-1]
+      arr=toNDArray(row)
+      cv2.imwrite(outname,arr)
+      
+im_lab.foreach(saveImagesFromDataFrame)
