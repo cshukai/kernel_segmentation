@@ -1,28 +1,13 @@
 import cv2
 import numpy as np
-import os
-import mmlspark
-from mmlspark import toNDArray
-from mmlspark import ImageTransformer
-from mmlspark import ImageWriter
-from PIL import Image
 
+# build rdd
+tiff_rdd = sc.binaryFiles('hdfs://localhost:9000/*.tiff')
 
-IMAGE_PATH="hdfs://localhost:9000/"
-images = spark.readImages(IMAGE_PATH, recursive = True, sampleRatio = 1.0)
+# transform to array that cv can use
+def tiff2CvArr(element):
+      file_bytes = np.asarray(bytearray(element), dtype=np.uint8) #TypeError: unicode argument without an encoding
+      R = cv2.imdecode(file_bytes,1) #1-3 channel
+      return R
 
-tr_rgb2lab = (ImageTransformer() 
-      .setOutputCol("transformed")
-      .colorFormat(cv2.COLOR_RGB2Lab)
-      )
-
-im_lab = tr_rgb2lab.transform(images).select("transformed")
-
-
-def saveImagesFromDataFrame(row):
-      inputnames=str(row.path).split("/") # doesn't seem like it is row object since it can't access path directly
-      outname=inputnames[len(inputnames)-1]
-      arr=toNDArray(row)
-      cv2.imwrite(outname,arr)
-      
-im_lab.foreach(saveImagesFromDataFrame)
+imgarr_rdd=tiff_rdd.map(tiff2CvArr)
