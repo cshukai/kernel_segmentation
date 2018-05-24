@@ -24,10 +24,20 @@ def showType(row):
       print type(row)
 
 def saveImagesFromDataFrame(row):
-      inputnames=str(row.path).split("/") # doesn't seem like it is row object since it can't access path directly
+      deeperRow=row.transformed
+      inputnames=str(deeperRow.path).split("/") # doesn't seem like it is row object since it can't access path directly
       outname=inputnames[len(inputnames)-1]
-      arr=toNDArray(row)
+      arr=toNDArray(deeperRow)
       cv2.imwrite(outname,arr)
       
 im_lab.foreach(saveImagesFromDataFrame)
 im_lab.foreach(showType)  # pyspark.sql.types.Row
+
+#>>> x=im_lab.first()
+# >>> x.__fields__
+# ['transformed']
+# >>> y=x.transformed
+# >>> type(y)
+# <class 'pyspark.sql.types.Row'>
+# >>> y.__fields__
+# ['path', 'height', 'width', 'type', 'bytes']
