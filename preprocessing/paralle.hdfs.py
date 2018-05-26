@@ -30,6 +30,7 @@ def saveImagesFromDataFrame(row):
       arr=toNDArray(deeperRow)
       cv2.imwrite(outname,arr)
       
+      
 im_lab.foreach(saveImagesFromDataFrame)
 im_lab.foreach(showType)  # pyspark.sql.types.Row
 
