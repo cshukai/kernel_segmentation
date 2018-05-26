@@ -1,4 +1,5 @@
 # pyspark --num-executors 6 --driver-memory 6g --executor-memory 1g --packages Azure:mmlspark:0.12
+# this is the entry point of the pipeline
 import cv2
 import numpy as np
 import os
@@ -7,10 +8,21 @@ from mmlspark import toNDArray
 from mmlspark import ImageTransformer
 from mmlspark import ImageWriter
 from PIL import Image
+from pyspark.ml.linalg import Vectors
 
-
-IMAGE_PATH="hdfs://localhost:9000/"
+#IMAGE_PATH="hdfs://localhost:9000/"
+IMAGE_PATH=os.getcwd()
 images = spark.readImages(IMAGE_PATH, recursive = True, sampleRatio = 1.0)
+
+
+def rawDf2ColumnWiseDf(row):
+    deeperRow=row.image
+    arr=toNDArray(deeperRow)
+    r_rdd=spark.sparkContext.parallelize(arr[:,:,1])
+    g_rdd=spark.sparkContext.parallelize(arr[:,:,2])
+    b_rdd=spark.sparkContext.parallelize(arr[:,:,3])
+    #not sure if a list should be used here to store three separate rdd as it seems to put huge pressure on headnode
+    
 
 tr_rgb2lab = (ImageTransformer() 
       .setOutputCol("transformed")
