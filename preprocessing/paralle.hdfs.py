@@ -18,9 +18,9 @@ images = spark.readImages(IMAGE_PATH, recursive = True, sampleRatio = 1.0)
 def rawDf2ColumnWiseDf(row):
     deeperRow=row.image
     arr=toNDArray(deeperRow)
-    r_rdd=spark.sparkContext.parallelize(arr[:,:,1])
-    g_rdd=spark.sparkContext.parallelize(arr[:,:,2])
-    b_rdd=spark.sparkContext.parallelize(arr[:,:,3])
+    r_rdd=spark.sparkContext.parallelize(arr[:,:,0])
+    g_rdd=spark.sparkContext.parallelize(arr[:,:,1])
+    b_rdd=spark.sparkContext.parallelize(arr[:,:,2])
     #not sure if a list should be used here to store three separate rdd as it seems to put huge pressure on headnode
     
 
