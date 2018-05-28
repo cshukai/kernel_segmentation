@@ -20,9 +20,10 @@ import cProfile
 IMAGE_PATH=os.getcwd()+'/DSC_0785.tiff'
 images = spark.readImages(IMAGE_PATH, recursive = True, sampleRatio = 1.0)
 
-x=images.foreach(ColumnCorrKmean)
+x=images.foreach(ColumnCorrKmean) # code may work but output not retrievalbe from worker node
 
-
+testcluster=KMeans(ncluster=3)
+testcluster.fit(x) # does x has to be panda dataframe ?
 
 def rawDf2ColumnWiseDf(row):
     deeperRow=row.image
