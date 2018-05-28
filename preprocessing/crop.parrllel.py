@@ -20,13 +20,15 @@ def getCorrMatrix(deeperRow,rawImgArr,is4Column):
         print("")    
     return corMax    
     
-t=cProfile.run(getCorrMatrix(y,z,True))
 
 def ColumnCorrKmean(row):
     deeperRow=row.image
     arr=toNDArray(deeperRow)
-    
+    out=getCorrMatrix(deeperRow,arr,True)
+    return(out)
 
+
+cProfile.run("x=images.foreach(ColumnCorrKmean)")
 
 def findBondary(row):
     deeperRow=row.image
