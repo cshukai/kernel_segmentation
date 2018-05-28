@@ -9,10 +9,19 @@ from mmlspark import ImageTransformer
 from mmlspark import ImageWriter
 from PIL import Image
 from pyspark.ml.linalg import Vectors
+from scipy.stats.stats import pearsonr
+from mmlspark import toNDArray
+from sklearn.cluster import KMeans
+import sklearn.metrics as metrics
+import cProfile
+
 
 #IMAGE_PATH="hdfs://localhost:9000/"
-IMAGE_PATH=os.getcwd()
+IMAGE_PATH=os.getcwd()+'/DSC_0785.tiff'
 images = spark.readImages(IMAGE_PATH, recursive = True, sampleRatio = 1.0)
+
+x=images.foreach(ColumnCorrKmean)
+
 
 
 def rawDf2ColumnWiseDf(row):
