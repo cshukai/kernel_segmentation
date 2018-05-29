@@ -14,6 +14,7 @@ from mmlspark import toNDArray
 from sklearn.cluster import KMeans
 import sklearn.metrics as metrics
 import cProfile
+import pychart
 
 
 #IMAGE_PATH="hdfs://localhost:9000/"
