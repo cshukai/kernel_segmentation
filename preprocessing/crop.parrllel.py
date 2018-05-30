@@ -2,20 +2,20 @@
 
 
 def getCorrMatrix(deeperRow,rawImgArr,is4Column):
-    f1=open('./cor_test.txt', 'w+')
+    f1=open('./cor_r_test.txt', 'w+')
+    f2=open('./cor_g_test.txt', 'w+')
+    f3=open('./cor_b_test.txt', 'w+')
     corMax=[]
     if(is4Column):
         for i in range(deeperRow.width):
             if i<deeperRow.width-1:
-                left=[]
-                right=[]
-                for j in range(deeperRow.height):
-                    left.append(sum(rawImgArr[j,i,:]))
-                    right.append(sum(rawImgArr[j,i+1,:]))
                 print >>f1, 'width'+str(i)+'\n'
-                print>>f1, str(pearsonr(left,right))+'\n'
-        
-                corMax.append(pearsonr(left,right))
+                print>>f1, str(pearsonr(rawImgArr[:,i,0],rawImgArr[:,i+1,0]))+'\n'
+                print >>f2, 'width'+str(i)+'\n'
+                print>>f2, str(pearsonr(rawImgArr[:,i,1],rawImgArr[:,i+1,1]))+'\n'
+                print >>f3, 'width'+str(i)+'\n'
+                print>>f3, str(pearsonr(rawImgArr[:,i,2],rawImgArr[:,i+1,2]))+'\n'
+                #corMax.append(pearsonr(left,right))
     else:
         print("")    
     return corMax    
