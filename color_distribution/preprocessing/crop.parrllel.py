@@ -3,11 +3,10 @@ import scipy.ndimage
 x=images.first()
 y=x.image
 z=toNDArray(y)
-m=numpy.zeros(z.shape)
-m=scipy.ndimage.median_filter(z,size=3)
+m=np.zeros(z.shape)
+scipy.ndimage.median_filter(z,size=3,output=m)
 # filter is not allowed to pass the edge of image in this function
-def squareFilterScan(ndarr,orientation,fiterSize,stride): #orientation 1-columnwise,2-row-wise
-     
+
 
 
 def getCorrMatrix(deeperRow,rawImgArr,is4Column):
