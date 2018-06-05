@@ -36,7 +36,9 @@ def rawDf2ColumnWiseDf(row):
 
 tr_rgb2lab = (ImageTransformer() 
       .setOutputCol("transformed")
-      .colorFormat(cv2.COLOR_RGB2Lab)
+      .colorFormat(cv2.COLOR_BGR2GRAY)
+      #.colorFormat(cv2.COLOR_BGR2Lab)
+      #.colorFormat(cv2.COLOR_RGB2Lab)
       )
 
 im_lab = tr_rgb2lab.transform(images).select("transformed")
@@ -48,7 +50,7 @@ def showType(row):
 def saveImagesFromDataFrame(row):
       deeperRow=row.transformed
       inputnames=str(deeperRow.path).split("/") # doesn't seem like it is row object since it can't access path directly
-      outname=inputnames[len(inputnames)-1]
+      outname=inputnames[len(inputnames)-1]+".cvt.tiff"
       arr=toNDArray(deeperRow)
       cv2.imwrite(outname,arr)
       
