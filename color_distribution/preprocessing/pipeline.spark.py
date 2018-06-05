@@ -36,9 +36,9 @@ def rawDf2ColumnWiseDf(row):
 
 tr_rgb2lab = (ImageTransformer() 
       .setOutputCol("transformed")
-      .colorFormat(cv2.COLOR_BGR2GRAY)
+      .colorFormat(cv2.COLOR_BGR2GRAY) # accroding to "machine learing and opencv" , you should use BGR when converting RGB to HSV, I suppose the same for rgb to lab
       #.colorFormat(cv2.COLOR_BGR2Lab)
-      #.colorFormat(cv2.COLOR_RGB2Lab)
+      #.colorFormat(cv2.COLOR_RGB2Lab) 
       )
 
 im_lab = tr_rgb2lab.transform(images).select("transformed")

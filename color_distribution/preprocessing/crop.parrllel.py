@@ -1,12 +1,34 @@
 #continue from preprocessing/pipeline.spark.py
 import scipy.ndimage
+from keras import layers
+from keras import models
+from skimage.util import view_as_windows
+
+
+########### for small-scale test##############
 x=images.first()
 y=x.image
 z=toNDArray(y)
+#####################approach 1 for image patch########
+
+
+def img2patches(ndarr,patch_width,patch_height,nchannel):
+    window_shape = (patch_width, patch_height,nchannel)
+    out=view_as_windows(ndarr,window_shape)
+    return(out)
+
+patches=img2patches(z,28,28,3)
+
+#####################approach 2 for image patch########
+
+model = models.Sequential()
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.MaxPooling2D((2, 2)))
+################## 
+
 m=np.zeros(z.shape)
 scipy.ndimage.median_filter(z,size=3,output=m)
-# filter is not allowed to pass the edge of image in this function
-
+###################################################3
 
 
 def getCorrMatrix(deeperRow,rawImgArr,is4Column):
