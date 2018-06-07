@@ -1,7 +1,5 @@
 #continue from preprocessing/pipeline.spark.py
 import scipy.ndimage
-from keras import layers
-from keras import models
 from skimage.util import view_as_windows
 
 ########### for small-scale test##############
@@ -18,6 +16,61 @@ def img2patches(ndarr,patch_width,patch_height,nchannel):
     return(out)
 
 patches=img2patches(z,28,28,3)
+
+
+''' testing
+np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
+array([[[ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True],
+        ...,
+        [ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True]],
+
+       [[ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True],
+        ...,
+        [ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True]],
+
+       [[ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True],
+        ...,
+        [ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True]],
+
+       ...,
+
+       [[ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True],
+        ...,
+        [ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True]],
+
+       [[ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True],
+        ...,
+        [ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True]],
+
+       [[ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True],
+        ...,
+        [ True,  True,  True],
+        [ True,  True,  True],
+        [ True,  True,  True]]])
+>>> 
+'''
 
 #############
 
