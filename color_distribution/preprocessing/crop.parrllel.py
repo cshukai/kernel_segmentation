@@ -4,11 +4,11 @@ from keras import layers
 from keras import models
 from skimage.util import view_as_windows
 
-
 ########### for small-scale test##############
 x=images.first()
 y=x.image
 z=toNDArray(y)
+
 #####################approach 1 for image patch########
 
 
@@ -19,11 +19,15 @@ def img2patches(ndarr,patch_width,patch_height,nchannel):
 
 patches=img2patches(z,28,28,3)
 
-#####################approach 2 for image patch########
+#############
 
+
+#############convolution to get image patches################
+#but does convolution l
 model = models.Sequential()
-model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.Conv2D(32, (3, 3), activation=None, input_shape=(28, 28, 1)))
 model.add(layers.MaxPooling2D((2, 2)))
+model.summary()
 ################## 
 
 m=np.zeros(z.shape)
