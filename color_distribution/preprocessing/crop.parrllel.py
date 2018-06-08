@@ -6,19 +6,19 @@ from skimage.util import view_as_windows
 x=images.first()
 y=x.image
 z=toNDArray(y)
+############################################
 
-#####################approach 1 for image patch########
 
-
-def img2patches(ndarr,patch_width,patch_height,nchannel):
+def img2patches(ndarr,patch_width,patch_height,nchannel,stride):
     window_shape = (patch_width, patch_height,nchannel)
-    out=view_as_windows(ndarr,window_shape)
+    out=view_as_windows(ndarr,window_shape,step=stride)
     return(out)
 
-patches=img2patches(z,28,28,3)
-
+patches=img2patches(z,2,2,3,2)
+np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:])
 
 ''' testing
+patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
 array([[[ True,  True,  True],
         [ True,  True,  True],
