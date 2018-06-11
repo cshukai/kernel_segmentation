@@ -1,7 +1,7 @@
 #continue from preprocessing/pipeline.spark.py
 import scipy.ndimage
 from skimage.util import view_as_windows
-
+from sklearn.cluster import KMeans
 ########### for small-scale test##############
 x=images.first()
 y=x.image
@@ -14,9 +14,55 @@ def img2patches(ndarr,patch_width,patch_height,nchannel,stride):
     out=view_as_windows(ndarr,window_shape,step=stride)
     return(out)
 
-patches=img2patches(z,2,2,3,2)
-np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:])
+def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
+    n_samples=patches.shape[0]*patches.shape[1]
+    n_features=patches.shape[5]# channel num
+    if(pooling==0):
+        out=np.zeros(shape=(n_samples,n_features),dtype=int) #[R_G_B][toplef,topright,bottomleft,bottomright]
+        for(i in range(patches.shape[1])):
+            for(j in range(patches.shape[0])):
+                this_patch_r_tl=patches[i,j][0][0][0][0]
+                this_patch_g_tl=patches[i,j][0][0][0][1]
+                this_patch_b_tl=patches[i,j][0][0][0][2]
+                this_patch_r_tr=patches[i,j][0][0][1][0]
+                this_patch_g_tr=patches[i,j][0][0][1][1]
+                this_patch_b_tr=patches[i,j][0][0][1][2]
+                this_patch_r_bl=patches[i,j][0][1][0][0]
+                this_patch_g_bl=patches[i,j][0][1][0][1]
+                this_patch_b_bl=patches[i,j][0][1][0][2]
+                this_patch_r_br=patches[i,j][0][1][1][0]
+                this_patch_g_br=patches[i,j][0][1][1][1]
+                this_patch_b_br=patches[i,j][0][1][1][2]
+                #todo add location index as table names 
+'''
+>>> patches[0,0]
+array([[[[134, 165, 222],
+         [129, 167, 221]],
 
+        [[133, 166, 222],
+         [128, 169, 221]]]], dtype=uint8)
+>>> patches[0,1]
+array([[[[126, 169, 218],
+         [119, 171, 215]],
+
+        [[124, 169, 222],
+         [117, 170, 223]]]], dtype=uint8)
+>>> z[0,0]
+array([134, 165, 222], dtype=uint8)
+>>> z[0,1]                                                                                   
+array([129, 167, 221], dtype=uint8)
+>>> z[1,1]                                                                                    
+array([128, 169, 221], dtype=uint8)
+>>> z[1,0]                                                                                   
+array([133, 166, 222], dtype=uint8)
+'''
+
+
+patches=img2patches(z,2,2,3,2)
+np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:]) # validation
+
+kmean = KMeans(n_clusters=2)
+keman.fit(patches)
 ''' testing
 patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
