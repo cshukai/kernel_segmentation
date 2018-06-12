@@ -18,9 +18,13 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
     n_samples=patches.shape[0]*patches.shape[1]
     n_features=patches.shape[5]# channel num
     if(pooling==0):
-        out=np.zeros(shape=(n_samples,n_features),dtype=int) #[R_G_B][toplef,topright,bottomleft,bottomright]
-        for(i in range(patches.shape[1])):
-            for(j in range(patches.shape[0])):
+        n_features=n_features*4
+        out=np.zeros(shape=( n_samples,n_features),dtype=int) #[R_G_B][toplef,topright,bottomleft,bottomright]
+        counter=0
+        for i in range(patches.shape[1]):
+          if i<patches.shape[1]-1:
+            for j in range(patches.shape[0]):
+              if j<patches.shape[0]-1:    
                 this_patch_r_tl=patches[i,j][0][0][0][0]
                 this_patch_g_tl=patches[i,j][0][0][0][1]
                 this_patch_b_tl=patches[i,j][0][0][0][2]
@@ -33,7 +37,21 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
                 this_patch_r_br=patches[i,j][0][1][1][0]
                 this_patch_g_br=patches[i,j][0][1][1][1]
                 this_patch_b_br=patches[i,j][0][1][1][2]
-                #todo add location index as table names 
+                out[counter,0]=this_patch_r_tl
+                out[counter,1]=this_patch_g_tl
+                out[counter,2]=this_patch_b_tl
+                out[counter,3]=this_patch_r_tr
+                out[counter,4]=this_patch_g_tr
+                out[counter,5]=this_patch_b_tr
+                out[counter,6]=this_patch_r_bl
+                out[counter,7]=this_patch_g_bl
+                out[counter,8]=this_patch_b_bl
+                out[counter,9]=this_patch_r_br
+                out[counter,10]=this_patch_g_br
+                out[counter,11]=this_patch_b_br
+                counter=counter+1
+    return(out)
+
 '''
 >>> patches[0,0]
 array([[[[134, 165, 222],
@@ -59,10 +77,11 @@ array([133, 166, 222], dtype=uint8)
 
 
 patches=img2patches(z,2,2,3,2)
-np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:]) # validation
+patch_tbl=reformPatches4Clustering(patches,0)
+#np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:]) # validation
 
 kmean = KMeans(n_clusters=2)
-keman.fit(patches)
+kmean.fit(patch_tbl)
 ''' testing
 patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
