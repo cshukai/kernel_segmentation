@@ -24,19 +24,21 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
         for i in range(patches.shape[1]):
           if i<patches.shape[1]-1:
             for j in range(patches.shape[0]):
-              if j<patches.shape[0]-1:    
-                this_patch_r_tl=patches[i,j][0][0][0][0]
-                this_patch_g_tl=patches[i,j][0][0][0][1]
-                this_patch_b_tl=patches[i,j][0][0][0][2]
-                this_patch_r_tr=patches[i,j][0][0][1][0]
-                this_patch_g_tr=patches[i,j][0][0][1][1]
-                this_patch_b_tr=patches[i,j][0][0][1][2]
-                this_patch_r_bl=patches[i,j][0][1][0][0]
-                this_patch_g_bl=patches[i,j][0][1][0][1]
-                this_patch_b_bl=patches[i,j][0][1][0][2]
-                this_patch_r_br=patches[i,j][0][1][1][0]
-                this_patch_g_br=patches[i,j][0][1][1][1]
-                this_patch_b_br=patches[i,j][0][1][1][2]
+              if j<patches.shape[0]-1:
+                print(i)
+                print(j)
+                this_patch_r_tl=patches[j,i][0][0][0][0]
+                this_patch_g_tl=patches[j,i][0][0][0][1]
+                this_patch_b_tl=patches[j,i][0][0][0][2]
+                this_patch_r_tr=patches[j,i][0][0][1][0]
+                this_patch_g_tr=patches[j,i][0][0][1][1]
+                this_patch_b_tr=patches[j,i][0][0][1][2]
+                this_patch_r_bl=patches[j,i][0][1][0][0]
+                this_patch_g_bl=patches[j,i][0][1][0][1]
+                this_patch_b_bl=patches[j,i][0][1][0][2]
+                this_patch_r_br=patches[j,i][0][1][1][0]
+                this_patch_g_br=patches[j,i][0][1][1][1]
+                this_patch_b_br=patches[j,i][0][1][1][2]
                 out[counter,0]=this_patch_r_tl
                 out[counter,1]=this_patch_g_tl
                 out[counter,2]=this_patch_b_tl
