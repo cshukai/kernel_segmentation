@@ -14,7 +14,14 @@ def img2patches(ndarr,patch_width,patch_height,nchannel,stride):
     out=view_as_windows(ndarr,window_shape,step=stride)
     return(out)
 
-def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
+'''
+counter number doesn't match patch number , need to fix this bug
+2543445
+>>> patches.shape[0]*patches.shape[1]
+2546700
+'''
+
+def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features) 
     n_samples=patches.shape[0]*patches.shape[1]
     n_features=patches.shape[5]# channel num
     if(pooling==0):
@@ -25,8 +32,8 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
           if i<patches.shape[1]-1:
             for j in range(patches.shape[0]):
               if j<patches.shape[0]-1:
-                print(i)
-                print(j)
+               # print(i)
+               #print(j)
                 this_patch_r_tl=patches[j,i][0][0][0][0]
                 this_patch_g_tl=patches[j,i][0][0][0][1]
                 this_patch_b_tl=patches[j,i][0][0][0][2]
@@ -52,6 +59,7 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
                 out[counter,10]=this_patch_g_br
                 out[counter,11]=this_patch_b_br
                 counter=counter+1
+                print(counter)
     return(out)
 
 '''
@@ -83,7 +91,8 @@ patch_tbl=reformPatches4Clustering(patches,0)
 #np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:]) # validation
 
 kmean = KMeans(n_clusters=2)
-kmean.fit(patch_tbl)
+kmean.labels_ #see clustering result
+cluster_result=kmean.fit(patch_tbl)
 ''' testing
 patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
