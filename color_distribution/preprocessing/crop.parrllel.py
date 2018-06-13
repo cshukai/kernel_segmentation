@@ -22,7 +22,7 @@ counter number doesn't match patch number , need to fix this bug
 '''
 
 
-def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features) 
+def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features) to fit the input format of kmean 
     n_samples=patches.shape[0]*patches.shape[1]
     n_features=patches.shape[5]# channel num
     if(pooling==0):
@@ -95,6 +95,8 @@ kmean = KMeans(n_clusters=2)
 cluster_result=kmean.fit(patch_tbl)
 kmean.labels_ #see clustering result
 
+unique, counts = np.unique(kmean.labels_, return_counts=True)
+dict(zip(unique, counts))
 ''' testing
 patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
