@@ -21,6 +21,7 @@ counter number doesn't match patch number , need to fix this bug
 2546700
 '''
 
+
 def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features) 
     n_samples=patches.shape[0]*patches.shape[1]
     n_features=patches.shape[5]# channel num
@@ -29,9 +30,9 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features)
         out=np.zeros(shape=( n_samples,n_features),dtype=int) #[R_G_B][toplef,topright,bottomleft,bottomright]
         counter=0
         for i in range(patches.shape[1]):
-          if i<patches.shape[1]-1:
+          #if i<patches.shape[1]-1:
             for j in range(patches.shape[0]):
-              if j<patches.shape[0]-1:
+              #if j<patches.shape[0]-1:
                # print(i)
                #print(j)
                 this_patch_r_tl=patches[j,i][0][0][0][0]
@@ -91,8 +92,9 @@ patch_tbl=reformPatches4Clustering(patches,0)
 #np.equal(z[0:2,0:2,:],patches[0,0,0,:,:,:]) # validation
 
 kmean = KMeans(n_clusters=2)
-kmean.labels_ #see clustering result
 cluster_result=kmean.fit(patch_tbl)
+kmean.labels_ #see clustering result
+
 ''' testing
 patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
