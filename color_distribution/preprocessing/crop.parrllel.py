@@ -2,6 +2,7 @@
 import scipy.ndimage
 from skimage.util import view_as_windows
 from sklearn.cluster import KMeans
+from PIL import Image
 ########### for small-scale test##############
 x=images.first()
 y=x.image
@@ -60,7 +61,7 @@ def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features) to
                 out[counter,10]=this_patch_g_br
                 out[counter,11]=this_patch_b_br
                 counter=counter+1
-                print(counter)
+                #print(counter)
     return(out)
 
 '''
@@ -97,6 +98,30 @@ kmean.labels_ #see clustering result
 
 unique, counts = np.unique(kmean.labels_, return_counts=True)
 dict(zip(unique, counts))
+
+def vizKmeanResult(kmeanLabels,patches,patch_tbl):
+    for i in range(patch_tbl.shape[0]):
+        out[0,0,0]=patch_tbl[i,0]
+        out[0,0,1]=patch_tbl[i,1]
+        out[0,0,2]=patch_tbl[i,2]
+        out[0,1,0]=patch_tbl[i,3]
+        out[0,1,1]=patch_tbl[i,4]
+        out[0,1,2]=patch_tbl[i,5]
+        out[1,0,0]=patch_tbl[i,6]
+        out[1,0,1]=patch_tbl[i,7]
+        out[1,0,2]=patch_tbl[i,8]
+        out[1,1,0]=patch_tbl[i,9]
+        out[1,1,1]=patch_tbl[i,10]
+        out[1,1,2]=patch_tbl[i,11]
+        outname=str(i)+"_"+str(kmeanLabels[i])+".png"
+        img = Image.fromarray(out, 'RGB')
+        img.save(outname)
+        
+'''
+>>> this_patch=np.array([[[out[i,0],out[i,3]],[out[i,6],out[i,9]]],[[out[i,1],out[i,4]],[out[i,7],out[i,10]]],[[out[i,2],out[i,5]],[out[i,8],out[i,11]]]])        
+>>> this_patch.shape
+(3, 2, 2)
+''''
 ''' testing
 patches=img2patches(z,28,28,3)
 np.equal(z[0:28,0:28,:],patches[0,0,0,:,:,:])                                             
