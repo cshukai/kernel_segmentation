@@ -3,6 +3,8 @@ import scipy.ndimage
 from skimage.util import view_as_windows
 from sklearn.cluster import KMeans
 from PIL import Image
+from scipy.stats import ks_2samp
+
 ########### for small-scale test##############
 x=images.first()
 y=x.image
@@ -22,8 +24,8 @@ counter number doesn't match patch number , need to fix this bug
 2546700
 '''
 
-
-def reformPatches4Clustering(patches,pooling): #shape=(n_samples, n_features) to fit the input format of kmean 
+#shape=(n_samples, n_features) to fit the input format of kmean
+def reformPatches4Clustering(patches,pooling):  
     n_samples=patches.shape[0]*patches.shape[1]
     n_features=patches.shape[5]# channel num
     if(pooling==0):
@@ -95,10 +97,20 @@ patch_tbl=reformPatches4Clustering(patches,0)
 kmean = KMeans(n_clusters=2)
 cluster_result=kmean.fit(patch_tbl)
 kmean.labels_ #see clustering result
-
 unique, counts = np.unique(kmean.labels_, return_counts=True)
 dict(zip(unique, counts))
 
+
+
+######################## testing if clusters are different from each other########3
+ks_2samp()
+
+
+
+
+
+################visualization for manual validation#####################3
+a=kmean.labels_
 def vizKmeanResult(kmeanLabels,patches,patch_tbl):
     for i in range(patch_tbl.shape[0]):
         out[0,0,0]=patch_tbl[i,0]
@@ -116,7 +128,11 @@ def vizKmeanResult(kmeanLabels,patches,patch_tbl):
         outname=str(i)+"_"+str(kmeanLabels[i])+".png"
         img = Image.fromarray(out, 'RGB')
         img.save(outname)
-        
+
+
+vizKmeanResult(a,patches,patch_tbl)
+########################################################3
+       
 '''
 >>> this_patch=np.array([[[out[i,0],out[i,3]],[out[i,6],out[i,9]]],[[out[i,1],out[i,4]],[out[i,7],out[i,10]]],[[out[i,2],out[i,5]],[out[i,8],out[i,11]]]])        
 >>> this_patch.shape
