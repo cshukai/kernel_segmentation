@@ -4,6 +4,7 @@ from skimage.util import view_as_windows
 from sklearn.cluster import KMeans
 from PIL import Image
 from scipy.stats import ks_2samp
+from sklearn import decomposition
 
 ########### for small-scale test##############
 x=images.first()
@@ -103,7 +104,14 @@ dict(zip(unique, counts))
 
 
 ######################## testing if clusters are different from each other########3
-ks_2samp()
+a=kmean.labels_
+
+potential_bg_gr=patch_tbl[np.where(a==0),:]
+potential_fg_gr=patch_tbl[np.where(a==1),:]
+
+def testRGB(patch_tbl,gr1,gr2,reduction,test):
+    if()
+    
 
 
 
@@ -111,7 +119,7 @@ ks_2samp()
 
 ################visualization for manual validation#####################3
 a=kmean.labels_
-def vizKmeanResult(kmeanLabels,patches,patch_tbl):
+def vizIdvPatches4KmeanResult(kmeanLabels,patches,patch_tbl):
     for i in range(patch_tbl.shape[0]):
         out[0,0,0]=patch_tbl[i,0]
         out[0,0,1]=patch_tbl[i,1]
@@ -130,8 +138,31 @@ def vizKmeanResult(kmeanLabels,patches,patch_tbl):
         img.save(outname)
 
 
-vizKmeanResult(a,patches,patch_tbl)
-########################################################3
+vizIdvPatches4KmeanResult(a,patches,patch_tbl)
+
+def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
+    potential_bg_gr=patch_tbl[np.where(a==0),:]
+    potential_fg_gr=patch_tbl[np.where(a==1),:]
+    sample_num_bg=np.floor(np.sqrt(potential_bg_gr.shape[1]).astype('int'))**2
+    sample_num_bg=sample_num_bg.astype('int')
+    sample_num_fg=np.floor(np.sqrt(potential_fg_gr.shape[1]).astype('int'))**2
+    sample_num_fg=sample_num_fg.astype('int')
+    
+    bg_viz=np.zeros()
+    for i in range(potential_bg_gr.shape[0]):
+        out[0,0,0]=potential_bg_gr[i,0]
+        out[0,0,1]=potential_bg_gr[i,1]
+        out[0,0,2]=potential_bg_gr[i,2]
+        out[0,1,0]=potential_bg_gr[i,3]
+        out[0,1,1]=potential_bg_gr[i,4]
+        out[0,1,2]=potential_bg_gr[i,5]
+        out[1,0,0]=potential_bg_gr[i,6]
+        out[1,0,1]=potential_bg_gr[i,7]
+        out[1,0,2]=potential_bg_gr[i,8]
+        out[1,1,0]=potential_bg_gr[i,9]
+        out[1,1,1]=potential_bg_gr[i,10]
+        out[1,1,2]=potential_bg_gr[i,11]
+########################################################
        
 '''
 >>> this_patch=np.array([[[out[i,0],out[i,3]],[out[i,6],out[i,9]]],[[out[i,1],out[i,4]],[out[i,7],out[i,10]]],[[out[i,2],out[i,5]],[out[i,8],out[i,11]]]])        
