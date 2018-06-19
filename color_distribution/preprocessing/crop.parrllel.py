@@ -143,12 +143,14 @@ vizIdvPatches4KmeanResult(a,patches,patch_tbl)
 def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
     potential_bg_gr=patch_tbl[np.where(a==0),:]
     potential_fg_gr=patch_tbl[np.where(a==1),:]
+    
     sample_num_bg=np.floor(np.sqrt(potential_bg_gr.shape[1]).astype('int'))**2
     sample_num_bg=sample_num_bg.astype('int')
     sample_num_fg=np.floor(np.sqrt(potential_fg_gr.shape[1]).astype('int'))**2
     sample_num_fg=sample_num_fg.astype('int')
     
-    bg_viz=np.zeros()
+    width=np.sqrt(sample_num_bg).astype('int')*patches.shape[3]
+    bg_viz=np.zeros(shape=( width,width,3),dtype=int)
     for i in range(potential_bg_gr.shape[0]):
         out[0,0,0]=potential_bg_gr[i,0]
         out[0,0,1]=potential_bg_gr[i,1]
