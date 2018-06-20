@@ -6,6 +6,7 @@ from PIL import Image
 from scipy.stats import ks_2samp
 from sklearn import decomposition
 import random
+from collections import Counter
 ########### for small-scale test##############
 x=images.first()
 y=x.image
@@ -152,8 +153,8 @@ def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
     width=np.sqrt(sample_num_bg).astype('int')*patches.shape[3]
     bg_viz=np.zeros(shape=( width,width,3),dtype=int)
     sampledIdx=random.sample(range(0, potential_bg_gr.shape[1]-1),sample_num_bg)
-    
-    for i in range(potential_bg_gr.shape[0]):
+    #[item for item, count in Counter(sampledIdx).iteritems() if count > 1]
+    for i in range(len(sampledIdx)):
         out[0,0,0]=potential_bg_gr[i,0]
         out[0,0,1]=potential_bg_gr[i,1]
         out[0,0,2]=potential_bg_gr[i,2]
