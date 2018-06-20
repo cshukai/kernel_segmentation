@@ -145,14 +145,14 @@ def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
     potential_bg_gr=patch_tbl[np.where(a==0),:]
     potential_fg_gr=patch_tbl[np.where(a==1),:]
     
-    sample_num_bg=np.floor(np.sqrt(potential_bg_gr.shape[1]).astype('int'))**2
-    sample_num_bg=sample_num_bg.astype('int')
-    sample_num_fg=np.floor(np.sqrt(potential_fg_gr.shape[1]).astype('int'))**2
-    sample_num_fg=sample_num_fg.astype('int')
+    # sample_num_bg=np.floor(np.sqrt(potential_bg_gr.shape[1]).astype('int'))**2
+    # sample_num_bg=sample_num_bg.astype('int')
+    # sample_num_fg=np.floor(np.sqrt(potential_fg_gr.shape[1]).astype('int'))**2
+    # sample_num_fg=sample_num_fg.astype('int')
     
-    width=np.sqrt(sample_num_bg).astype('int')*patches.shape[3]
-    bg_viz=np.zeros(shape=( width,width,3),dtype=int)
-    sampledIdx=random.sample(range(0, potential_bg_gr.shape[1]-1),sample_num_bg)
+    # width=np.sqrt(sample_num_bg).astype('int')*patches.shape[3]
+    # bg_viz=np.zeros(shape=( width,width,3),dtype=int)
+    # sampledIdx=random.sample(range(0, potential_bg_gr.shape[1]-1),sample_num_bg)
     #[item for item, count in Counter(sampledIdx).iteritems() if count > 1]
     for i in range(len(sampledIdx)):
         out[0,0,0]=potential_bg_gr[i,0]
