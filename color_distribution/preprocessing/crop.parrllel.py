@@ -145,7 +145,23 @@ def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
     potential_bg_gr=patch_tbl[np.where(a==0),:]
     potential_fg_gr=patch_tbl[np.where(a==1),:]
     
-    for i in range(potential_bg_gr.shape[1]):
+    
+    bg_out=np.zeros(shape=(2,2,3),dtype=int)
+    bg_out[0,0,0]=potential_bg_gr[0,0,0]
+    bg_out[0,0,1]=potential_bg_gr[0,0,1]
+    bg_out[0,0,2]=potential_bg_gr[0,0,2]
+    bg_out[0,1,0]=potential_bg_gr[0,0,3]
+    bg_out[0,1,1]=potential_bg_gr[0,0,4]
+    bg_out[0,1,2]=potential_bg_gr[0,0,5]
+    bg_out[1,0,0]=potential_bg_gr[0,0,6]
+    bg_out[1,0,1]=potential_bg_gr[0,0,7]
+    bg_out[1,0,2]=potential_bg_gr[0,0,8]
+    bg_out[1,1,0]=potential_bg_gr[0,0,9]
+    bg_out[1,1,1]=potential_bg_gr[0,0,10]
+    bg_out[1,1,2]=potential_bg_gr[0,0,11]
+    
+    for i in range(1,potential_bg_gr.shape[1]):
+        out=np.zeros(shape=(2,2,3),dtype=int)
         out[0,0,0]=potential_bg_gr[0,i,0]
         out[0,0,1]=potential_bg_gr[0,i,1]
         out[0,0,2]=potential_bg_gr[0,i,2]
@@ -158,6 +174,9 @@ def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
         out[1,1,0]=potential_bg_gr[0,i,9]
         out[1,1,1]=potential_bg_gr[0,i,10]
         out[1,1,2]=potential_bg_gr[0,i,11]
+        bg_out=np.vstack((bg_out,out))
+        img = Image.fromarray(bg_out, 'RGB')
+        img.save("test.bg.png")
 ########################################################
        
 '''
