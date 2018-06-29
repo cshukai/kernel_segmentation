@@ -19,12 +19,6 @@ def img2patches(ndarr,patch_width,patch_height,nchannel,stride):
     out=view_as_windows(ndarr,window_shape,step=stride)
     return(out)
 
-'''
-counter number doesn't match patch number , need to fix this bug
-2543445
->>> patches.shape[0]*patches.shape[1]
-2546700
-'''
 
 #shape=(n_samples, n_features) to fit the input format of kmean
 def reformPatches4Clustering(patches,pooling):  
