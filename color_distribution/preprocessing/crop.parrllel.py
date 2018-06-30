@@ -233,21 +233,6 @@ array([[[ True,  True,  True],
 >>> 
 '''
 
-#############
-
-
-#############convolution to get image patches################
-#but does convolution l
-model = models.Sequential()
-model.add(layers.Conv2D(32, (3, 3), activation=None, input_shape=(28, 28, 1)))
-model.add(layers.MaxPooling2D((2, 2)))
-model.summary()
-################## 
-
-m=np.zeros(z.shape)
-scipy.ndimage.median_filter(z,size=3,output=m)
-###################################################3
-
 
 def getCorrMatrix(deeperRow,rawImgArr,is4Column):
     f1=open('./cor_r_test.txt', 'w+')
