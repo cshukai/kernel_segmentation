@@ -133,6 +133,8 @@ def vizIdvPatches4KmeanResult(kmeanLabels,patches,patch_tbl):
         img.save(outname)
 
 
+'''
+this work but need to fit the screen dimension, not the error of code itself
 vizIdvPatches4KmeanResult(a,patches,patch_tbl)
 
 def vizAssemblePatchSquare4KmeanResult(a,patches,patch_tbl):
