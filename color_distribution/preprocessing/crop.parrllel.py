@@ -7,7 +7,6 @@ from scipy.stats import ks_2samp
 from sklearn import decomposition
 import random
 from collections import Counter
-from matplotlib.mlab import PCA
 ########### for small-scale test##############
 x=images.first()
 y=x.image
@@ -102,7 +101,6 @@ potential_bg_gr=patch_tbl[np.where(a==0),:]
 potential_fg_gr=patch_tbl[np.where(a==1),:]
 
 
-#dimension reduction
 def testRGB(patch_tbl,gr1,gr2,reduction,test):
     if()
     
