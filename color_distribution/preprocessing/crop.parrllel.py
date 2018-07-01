@@ -7,6 +7,7 @@ from scipy.stats import ks_2samp
 from sklearn import decomposition
 import random
 from collections import Counter
+from matplotlib.mlab import PCA
 ########### for small-scale test##############
 x=images.first()
 y=x.image
@@ -29,11 +30,7 @@ def reformPatches4Clustering(patches,pooling):
         out=np.zeros(shape=( n_samples,n_features),dtype=int) #[R_G_B][toplef,topright,bottomleft,bottomright]
         counter=0
         for i in range(patches.shape[1]):
-          #if i<patches.shape[1]-1:
             for j in range(patches.shape[0]):
-              #if j<patches.shape[0]-1:
-               # print(i)
-               #print(j)
                 this_patch_r_tl=patches[j,i][0][0][0][0]
                 this_patch_g_tl=patches[j,i][0][0][0][1]
                 this_patch_b_tl=patches[j,i][0][0][0][2]
@@ -104,6 +101,8 @@ a=kmean.labels_
 potential_bg_gr=patch_tbl[np.where(a==0),:]
 potential_fg_gr=patch_tbl[np.where(a==1),:]
 
+
+#dimension reduction
 def testRGB(patch_tbl,gr1,gr2,reduction,test):
     if()
     
