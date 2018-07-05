@@ -7,6 +7,7 @@ from scipy.stats import ks_2samp
 from sklearn import decomposition
 import random
 from collections import Counter
+import pandas as pd
 
 ########### for small-scale test##############
 x=images.first()
@@ -101,6 +102,11 @@ a=kmean.labels_
 potential_bg_gr=patch_tbl[np.where(a==0),:]
 potential_fg_gr=patch_tbl[np.where(a==1),:]
 
+df_bg=pd.DataFrame(potential_bg_gr[0,:,:])
+df_fg=pd.DataFrame(potential_fg_gr[0,:,:])
+
+df_bg.to_csv('~/bfg.csv')
+df_fg.to_csv('~/pfg.csv')
 
 def testRGB(patch_tbl,gr1,gr2,reduction,test):
     if()
